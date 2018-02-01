@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../app.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/16.2.0/umd/react.development.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.2.0/umd/react-dom.development.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const rootElement = document.getElementById('root');
+        class StopWatch extends React.Component {
+            state = {lapse: 0, running: false};
+
+            handleRunClick = () => {
+                this.setState(state => {
+                    if (state.running) {
+                        clearInterval(this.timer);
+                    }else {
+                        const startTime = Date.now() - this.state.lapse;
+
+                        this.timer = setInterval(() => {
+                            this.setState({lapse: Date.now() - startTime});
+                        });
+                    }
+                    return {running: !state.running};
+                })
+            }
+
+            handleClearClick = () => {
+                this.setState({lapse: 0, running: false});
+                clearInterval(this.timer);
+            }
+
+            render () {
+                return (
+                  <div>
+                      <div>{this.state.lapse}ms</div>
+                      <div><button onClick={this.handleRunClick}>{this.state.running ? 'Stop' : 'Start'}</button></div>
+                      <div><button onClick={this.handleClearClick}>Clear</button></div>
+                  </div>
+                );
+            }
+        }
+
+        ReactDOM.render(<StopWatch/>, rootElement);
+    </script>
+</body>
+</html>

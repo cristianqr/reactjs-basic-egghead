@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Use key property when rendering list</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/16.2.0/umd/react.development.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.2.0/umd/react-dom.development.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        const rootElement = document.querySelector('#root');
+
+        class App extends React.Component {
+            state = {addedFruitList: []};
+            static fruitList = [
+                'apple',
+                'banana',
+                'chirimoya',
+                'kiwi',
+                'peach'
+            ];
+
+            addFruit = () => {
+                this.setState(({addedFruitList}) => ({
+                    addedFruitList: [
+                        ...addedFruitList,
+                        App.fruitList.find(i => !addedFruitList.includes(i))
+                    ]
+                }));
+            }
+
+            removeFruit = (fruit) => {
+                this.setState(({addedFruitList}) => ({
+                    addedFruitList: addedFruitList.filter(item => item !== fruit)
+                }))
+            };
+
+            render () {
+                const {addedFruitList} = this.state;
+                return (
+                    <div>
+                        <div>
+                            <button onClick={this.addFruit}>+</button>
+                            {
+                                addedFruitList.map((fruit, i) => (
+                                    <div key={i}>
+                                        <button onClick={() => this.removeFruit(fruit)}>-</button>{fruit}
+                                        <input type="text"/>
+                                    </div>
+                                ))
+                            }
+                        </div>
+                    </div>
+                );
+            }
+        }
+
+        ReactDOM.render(
+            <App/>,
+            rootElement
+        );
+    </script>
+</body>
+</html>

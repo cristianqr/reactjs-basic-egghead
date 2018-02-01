@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Controlling form values</title>
+    <link rel="stylesheet" href="../app.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/16.2.0/umd/react.development.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.2.0/umd/react-dom.development.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        const rootElement = document.querySelector('#root');
+        class DynamicForm extends React.Component {
+            state = {multiLine: '', commaSeparate: '', multiSelect: []};
+            static fruidList = [
+                'Orange',
+                'Banana',
+                'Apple',
+                'Pear',
+                'Peach'
+            ];
+
+            onChangeCommaSeparate = (event) => {
+                const value = event.target.value;
+                const multiLine = value.split(',').map(fruit => fruit.trim()).filter(Boolean).join('\n');
+                const multiSelect = multiLine.split('\n').filter(v => DynamicForm.fruidList.includes(v));
+                this.setState({commaSeparate: value, multiLine, multiSelect});
+            }
+
+            onChangeMultiLine = (event) => {
+                const {value} = event.target;
+                const commaSeparate = value.split('\n').map(v => v.trim()).filter(Boolean).splice(',');
+                const multiSelect = commaSeparate.filter(v => DynamicForm.fruidList.includes(v));
+                this.setState({commaSeparate, multiLine: value, multiSelect});
+            }
+
+            onChangeMultiSelect = (event) => {
+                const multiSelect = Array.from(event.target.selectedOptions).map(o => o.value);
+                const multiLine = multiSelect.join('\n');
+                const commaSeparate = multiSelect.join(',');
+                this.setState({multiSelect, multiLine, commaSeparate});
+            }
+
+            render () {
+                const {multiLine, commaSeparate, multiSelect} = this.state;
+                return (
+                    <div>
+                        <div>
+                            <label>Comma separated values</label><br/>
+                            <input type="text" value={commaSeparate} onChange={this.onChangeCommaSeparate}/>
+                        </div>
+                        <div>
+                            <label>Multiline values</label><br/>
+                            <textarea cols="30" rows="5" value={multiLine} onChange={this.onChangeMultiLine}></textarea>
+                        </div>
+                        <div>
+                            <label>Multiselect values</label><br/>
+                            <select multiple size={DynamicForm.fruidList.length} value={multiSelect} onChange={this.onChangeMultiSelect}>
+                                {DynamicForm.fruidList.map(fruit => (
+                                    <option value={fruit} key={fruit}>{fruit}</option>
+                                ))}
+                            </select>
+                        </div>
+                    </div>
+                );
+            }
+        }
+
+        ReactDOM.render(
+            <DynamicForm/>,
+            rootElement
+        );
+    </script>
+</body>
+</html>

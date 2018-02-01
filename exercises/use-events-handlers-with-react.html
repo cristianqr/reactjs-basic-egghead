@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../app.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/16.2.0/umd/react.development.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.2.0/umd/react-dom.development.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        const rootElement = document.getElementById('root');
+        const state = {eventCount: 0, userName: ''};
+        
+        function App() {
+            return (
+                <div>
+                    <div>There have been {state.eventCount} events</div>
+                    <div>
+                        <button onClick={increment}>Click</button>
+                    </div>
+
+                    <div>You typed: {state.userName}</div>
+                    <div>
+                        <input type="text" onChange={updateUserName}/>
+                    </div>
+                </div>
+            );
+        }
+
+        function setState(newState) {
+            Object.assign(state, newState);
+            renderApp();
+        }
+
+        function increment() {
+            setState({eventCount: state.eventCount + 1});
+        }
+        function updateUserName(event) {
+            console.log(event.nativeEvent);
+            setState({userName: event.target.value});
+        }
+
+        function renderApp() {
+            ReactDOM.render(
+                <App/>,
+                rootElement
+            )
+        }
+
+        renderApp();
+    </script>
+</body>
+</html>

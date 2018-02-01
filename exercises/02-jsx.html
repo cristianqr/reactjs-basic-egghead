@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../app.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/16.2.0/umd/react.development.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.2.0/umd/react-dom.development.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        const rootElement = document.getElementById('root');
+
+//        const element = React.createElement(
+//            'div',
+//            {className: 'hello-world', children: ['Hello world!!', 'Goodbye world!!']}
+//        );
+
+        const content = 'Hello World!!';
+        const myClassName = 'hello-world';
+        const props = {
+            className: myClassName,
+            children: content
+        };
+        const element = <div {...props}/>;
+
+        ReactDOM.render(element, rootElement);
+    </script>
+</body>
+</html>

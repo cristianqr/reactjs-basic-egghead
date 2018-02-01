@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../app.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/16.2.0/umd/react.development.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.2.0/umd/react-dom.development.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        const rootElement = document.getElementById('root');
+        const Message = (props) => <div>{props.children}</div>;
+//        const element = (
+//            <div className="hello-world">
+//                {message({message: 'Hello world!!'})}
+//                {message({message: 'Goodbye world!'})}
+//            </div>
+//        );
+
+//        const element = (
+//            <div className="hello-world">
+//                {React.createElement(message, {message: 'Hello world!!'})}
+//                {React.createElement(message, {message: 'Goodbye world!'})}
+//            </div>
+//        );
+        const element = (
+            <div className="hello-world">
+                <Message children="Hello world!!"/>
+                <Message>Goodbye world!!</Message>
+            </div>
+        );
+        ReactDOM.render(element, rootElement);
+    </script>
+</body>
+</html>

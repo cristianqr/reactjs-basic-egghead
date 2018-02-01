@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Use key when rendering list</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/16.2.0/umd/react.development.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.2.0/umd/react-dom.development.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        const rootElement = document.querySelector('#root');
+
+        class App extends React.Component {
+            static fruitList = [
+                {id: 1, name: 'apple'},
+                {id: 2, name: 'banana'},
+                {id: 3, name: 'chirimoya'},
+                {id: 4, name: 'kiwi'},
+                {id: 5, name: 'peach'}
+            ];
+            render () {
+                return (
+                    <div>
+                        {
+                            App.fruitList.map(item => (
+                                <div key={item.id}>{item.name}</div>
+                            ))
+                        }
+                    </div>
+                );
+            }
+        }
+
+        ReactDOM.render(
+            <App/>,
+            rootElement
+        );
+    </script>
+</body>
+</html>

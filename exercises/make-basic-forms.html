@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../app.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/16.2.0/umd/react.development.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.2.0/umd/react-dom.development.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        const rootElement = document.getElementById('root');
+
+        class BasicForm extends React.Component {
+            onSave = (event) => {
+                event.preventDefault();
+                console.log(this.nameElement.value);
+            }
+
+            render () {
+                return (
+                    <div>
+                        <form onSubmit={this.onSave}>
+                            <label>Name: <input type="text" ref={node => this.nameElement = node}/></label>
+                            <button type="submit">Submit</button>
+                        </form>
+                    </div>
+                );
+            }
+        }
+
+        ReactDOM.render(
+            <BasicForm/>,
+            rootElement
+        );
+    </script>
+</body>
+</html>
